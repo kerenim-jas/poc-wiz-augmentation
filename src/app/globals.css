@@ -1,0 +1,182 @@
+@import "tailwindcss";
+
+/*
+ * Wiz Vulnerability Management — design tokens
+ * Extracted from Wiz UI screenshots (May 2026).
+ *
+ * JFrog augmentation chips use the JFrog brand green (--jfrog-green)
+ * to clearly mark which signals come from the JFrog → Wiz integration.
+ */
+:root {
+  /* Surface */
+  --bg: #ffffff;
+  --bg-subtle: #f7f8fa;
+  --bg-muted: #eef0f4;
+  --surface-card: #ffffff;
+  --surface-hover: #f3f5f8;
+
+  /* Sidebar (very dark navy / near-black) */
+  --sidebar-bg: #0e1828;
+  --sidebar-bg-hover: #1a2740;
+  --sidebar-bg-active: #1a2740;
+  --sidebar-text: #c5cad6;
+  --sidebar-text-active: #ffffff;
+  --sidebar-accent: #1e6fff;
+
+  /* Text */
+  --text-primary: #1a1f2e;
+  --text-secondary: #5a6478;
+  --text-tertiary: #8b94a7;
+  --text-link: #1e6fff;
+  --text-inverse: #ffffff;
+
+  /* Borders */
+  --border: #e3e6ec;
+  --border-strong: #c8cdd6;
+  --border-focus: #1e6fff;
+
+  /* Wiz brand */
+  --wiz-blue: #1e6fff;
+  --wiz-blue-hover: #1759d6;
+  --wiz-blue-soft: #eaf1ff;
+
+  /* Severity */
+  --critical: #d92626;
+  --critical-bg: #fdecec;
+  --high: #f06b1f;
+  --high-bg: #fdf0e8;
+  --medium: #e8a317;
+  --medium-bg: #fdf6e3;
+  --low: #6b7a8e;
+  --low-bg: #eef0f4;
+
+  /* Status */
+  --status-unresolved-bg: #fdecec;
+  --status-unresolved-fg: #d92626;
+  --status-resolved-bg: #e8f5ec;
+  --status-resolved-fg: #1e8a4d;
+
+  /* JFrog augmentation */
+  --jfrog-green: #3eb065;
+  --jfrog-green-soft: #e8f6ee;
+  --jfrog-green-dark: #2c8a4d;
+
+  --aug-drift: #d92626;
+  --aug-drift-bg: #fdecec;
+  --aug-malicious: #c2185b;
+  --aug-malicious-bg: #fdebf2;
+  --aug-newcve: #f06b1f;
+  --aug-newcve-bg: #fdf0e8;
+  --aug-sast: #5b3aff;
+  --aug-sast-bg: #eee9fd;
+
+  /* Mika AI accent */
+  --mika-grad-from: #6366f1;
+  --mika-grad-to: #8b5cf6;
+
+  /* Spacing */
+  --r-xs: 3px;
+  --r-s: 4px;
+  --r-m: 6px;
+  --r-l: 8px;
+  --r-xl: 10px;
+
+  /* Type stack */
+}
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--text-primary);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-text-link: var(--text-link);
+
+  --color-wiz-blue: var(--wiz-blue);
+  --color-wiz-blue-soft: var(--wiz-blue-soft);
+
+  --color-critical: var(--critical);
+  --color-high: var(--high);
+  --color-medium: var(--medium);
+  --color-low: var(--low);
+
+  --color-jfrog: var(--jfrog-green);
+  --color-jfrog-soft: var(--jfrog-green-soft);
+
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  --font-sans: var(--font-sans, ui-sans-serif, system-ui, sans-serif);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+  font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif);
+  font-size: 13px;
+  line-height: 18px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--wiz-blue-soft);
+  color: var(--wiz-blue);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-subtle);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+/* Typography utilities */
+.text-h1 {
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 700;
+}
+.text-h2 {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 600;
+}
+.text-h3 {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+}
+.text-body {
+  font-size: 13px;
+  line-height: 18px;
+}
+.text-meta {
+  font-size: 11px;
+  line-height: 14px;
+  color: var(--text-tertiary);
+}
+.text-mono {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* Decorative — striped highlight bar for severity stacks */
+.severity-bar {
+  display: inline-block;
+  width: 3px;
+  border-radius: 2px;
+}
