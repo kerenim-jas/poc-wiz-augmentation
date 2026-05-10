@@ -3,7 +3,7 @@
 > Companion document to the Wiz × JFrog Augmentation POC.
 > This script is the **non-leading** version we use during 1:1 calls with Security Managers (SMs / SecOps leads / Vuln-Mgmt leads) to test whether augmenting Wiz with JFrog signals creates real value for them.
 >
-> POC: [https://kerenim.github.io/poc-wiz-augmentation/](https://kerenim.github.io/poc-wiz-augmentation/) (replace once live)
+> POC: [https://kerenim-jas.github.io/poc-wiz-augmentation/](https://kerenim-jas.github.io/poc-wiz-augmentation/)
 > Password: `wiz-aug-2026`
 > Time budget: **30 min** call, **5–10 min** for the participant to interact with the POC.
 

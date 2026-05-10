@@ -2,7 +2,7 @@
 
 > Condensed, scannable version of [`sm-validation-script.md`](./sm-validation-script.md). Use this in the call. The full script has the rationale and capture template.
 >
-> **POC:** [https://kerenim.github.io/poc-wiz-augmentation/](https://kerenim.github.io/poc-wiz-augmentation/) (replace once live)
+> **POC:** [https://kerenim-jas.github.io/poc-wiz-augmentation/](https://kerenim-jas.github.io/poc-wiz-augmentation/)
 > **Password:** `wiz-aug-2026`
 
 ---

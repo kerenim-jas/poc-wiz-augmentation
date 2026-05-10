@@ -14,7 +14,7 @@ This is the companion POC to [poc-release-center](https://github.com/kerenim/poc
 
 ## Live POC
 
-`https://kerenim.github.io/poc-wiz-augmentation/`
+[https://kerenim-jas.github.io/poc-wiz-augmentation/](https://kerenim-jas.github.io/poc-wiz-augmentation/)
 
 Password: `wiz-aug-2026`
 
