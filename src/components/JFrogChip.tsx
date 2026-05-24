@@ -8,12 +8,12 @@ const TYPE_CONFIG: Record<
   AugType,
   { label: string; icon: React.ReactNode; bg: string; fg: string; border: string }
 > = {
-  INTEGRITY_DRIFT: {
-    label: "Integrity drift",
+  INTEGRITY_VIOLATION: {
+    label: "Integrity violation",
     icon: <GitCompare className="h-3 w-3" />,
-    bg: "var(--aug-drift-bg)",
-    fg: "var(--aug-drift)",
-    border: "var(--aug-drift)",
+    bg: "var(--aug-violation-bg)",
+    fg: "var(--aug-violation)",
+    border: "var(--aug-violation)",
   },
   MALICIOUS_PKG: {
     label: "Malicious package",

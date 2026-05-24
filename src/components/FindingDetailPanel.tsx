@@ -20,6 +20,8 @@ import {
 import type { Finding } from "@/lib/findings";
 import { JFrogChip, JFrogLogo, JFrogAugmentedTag } from "./JFrogChip";
 import { SeverityBadge, StatusPill } from "./SeverityBadge";
+import { JFrogResearchBadge } from "./JFrogResearchBadge";
+import { ApplicabilityPill } from "./ApplicabilityPill";
 
 type Tab = "overview" | "jfrog" | "code-to-cloud" | "comments" | "history";
 
@@ -77,7 +79,7 @@ export function FindingDetailPanel({
                 {isJFrog && <JFrogAugmentedTag />}
               </div>
               <div className="text-[11px]" style={{ color: "var(--text-tertiary)" }}>
-                {finding.jfrog?.type === "INTEGRITY_DRIFT"
+                {finding.jfrog?.type === "INTEGRITY_VIOLATION"
                   ? "Integrity Finding"
                   : finding.jfrog?.type === "MALICIOUS_PKG"
                     ? "Malicious Package Finding"
@@ -184,6 +186,9 @@ export function FindingDetailPanel({
                   {finding.jfrog && (
                     <JFrogChip type={finding.jfrog.type} variant="soft" size="md" />
                   )}
+                  {finding.applicability && (
+                    <ApplicabilityPill state={finding.applicability} />
+                  )}
                 </div>
                 <p
                   className="mt-2.5 text-[12px] leading-relaxed"
@@ -229,6 +234,11 @@ export function FindingDetailPanel({
                 <Field label="Severity">
                   <SeverityBadge severity={finding.severity} variant="pill" />
                 </Field>
+                {finding.applicability && (
+                  <Field label="Contextual Analysis">
+                    <ApplicabilityPill state={finding.applicability} />
+                  </Field>
+                )}
                 <Field label="Vendor Severity">
                   <SeverityBadge severity={finding.severity} variant="pill" />
                 </Field>
@@ -334,8 +344,8 @@ export function FindingDetailPanel({
                     JFrog Source
                   </div>
                   <div className="mt-1 text-[10px]" style={{ color: "var(--text-secondary)" }}>
-                    {finding.jfrog?.type === "INTEGRITY_DRIFT" && "JFrog AppTrust + Runtime"}
-                    {finding.jfrog?.type === "MALICIOUS_PKG" && "JFrog Security Research"}
+                    {finding.jfrog?.type === "INTEGRITY_VIOLATION" && "JFrog AppTrust + Runtime"}
+                    {finding.jfrog?.type === "MALICIOUS_PKG" && <JFrogResearchBadge />}
                     {finding.jfrog?.type === "NEWLY_APPLICABLE" &&
                       "JFrog Xray (contextual analysis)"}
                     {finding.jfrog?.type === "SAST" && "JFrog Xray (SAST engine)"}
@@ -615,8 +625,8 @@ function JFrogTab({ finding }: { finding: Finding }) {
         </div>
       </div>
 
-      {aug.type === "INTEGRITY_DRIFT" && (
-        <DriftDetails finding={finding} />
+      {aug.type === "INTEGRITY_VIOLATION" && (
+        <ViolationDetails finding={finding} />
       )}
       {aug.type === "MALICIOUS_PKG" && <MaliciousDetails finding={finding} />}
       {aug.type === "NEWLY_APPLICABLE" && <NewlyApplicableDetails finding={finding} />}
@@ -638,12 +648,12 @@ function JFrogTab({ finding }: { finding: Finding }) {
   );
 }
 
-function DriftDetails({ finding }: { finding: Finding }) {
+function ViolationDetails({ finding }: { finding: Finding }) {
   const d = finding.jfrog?.details;
   return (
     <div className="space-y-3">
       <h4 className="flex items-center gap-1.5 text-[12px] font-semibold" style={{ color: "var(--text-primary)" }}>
-        <GitCompare className="h-3.5 w-3.5" style={{ color: "var(--aug-drift)" }} />
+        <GitCompare className="h-3.5 w-3.5" style={{ color: "var(--aug-violation)" }} />
         SHA Comparison
       </h4>
       <div
@@ -686,7 +696,7 @@ function MaliciousDetails({ finding }: { finding: Finding }) {
     <div className="space-y-3">
       <h4 className="flex items-center gap-1.5 text-[12px] font-semibold" style={{ color: "var(--text-primary)" }}>
         <Bug className="h-3.5 w-3.5" style={{ color: "var(--aug-malicious)" }} />
-        JFrog Security Research advisory
+        <JFrogResearchBadge /> advisory
       </h4>
       <div className="rounded border p-3 text-[12px]" style={{ borderColor: "var(--border)" }}>
         <div className="flex items-center justify-between">
@@ -700,7 +710,10 @@ function MaliciousDetails({ finding }: { finding: Finding }) {
         <div className="mt-2 grid grid-cols-2 gap-3 text-[11px]">
           <div>
             <div className="text-[10px] uppercase tracking-wider" style={{ color: "var(--text-tertiary)" }}>
-              JFrog SR detected
+              Detected by
+            </div>
+            <div className="mt-1">
+              <JFrogResearchBadge />
             </div>
             <div className="mt-1 font-medium" style={{ color: "var(--text-primary)" }}>
               {d?.jfrogDetectedAt}
@@ -717,7 +730,7 @@ function MaliciousDetails({ finding }: { finding: Finding }) {
         </div>
         {d?.jfrogDetectedAt && d?.nvdPublishedAt && (
           <div className="mt-2.5 rounded border-l-2 px-2.5 py-1.5 text-[11px]" style={{ borderColor: "var(--jfrog-green)", background: "var(--jfrog-green-soft)", color: "var(--text-primary)" }}>
-            JFrog SR identified this malicious package <strong>14 days before</strong> a public CVE was issued — that&apos;s 14 days of head-start protection.
+            <JFrogResearchBadge /> identified this malicious package <strong>14 days before</strong> a public CVE was issued — that&apos;s 14 days of head-start protection.
           </div>
         )}
       </div>
@@ -734,6 +747,12 @@ function NewlyApplicableDetails({ finding }: { finding: Finding }) {
         Applicability timeline
       </h4>
       <div className="rounded border p-3" style={{ borderColor: "var(--border)" }}>
+        <div className="mb-3 flex items-center gap-2">
+          <span className="text-[10px] uppercase tracking-wider" style={{ color: "var(--text-tertiary)" }}>
+            Current status
+          </span>
+          <ApplicabilityPill state={finding.applicability ?? "Applicable"} />
+        </div>
         <div className="grid grid-cols-2 gap-3 text-[11px]">
           <div>
             <div className="text-[10px] uppercase tracking-wider" style={{ color: "var(--text-tertiary)" }}>

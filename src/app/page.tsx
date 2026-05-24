@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react";
 import {
-  Bookmark,
   ChevronDown,
   Settings as SettingsIcon,
   Sparkles,

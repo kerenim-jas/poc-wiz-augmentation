@@ -11,7 +11,7 @@
 
 ## North-Star Question
 
-> **"If your team had access to JFrog signals (integrity drift, malicious-package intel, applicability changes, SAST findings) inside the Wiz UI they already use — would it change what they do, what they prioritize, or how fast they act?"**
+> **"If your team had access to JFrog signals (integrity violation, malicious-package intel, applicability changes, SAST findings) inside the Wiz UI they already use — would it change what they do, what they prioritize, or how fast they act?"**
 
 Everything in this script supports answering that. If we can't answer it after 4–5 calls, the augmentation hypothesis is weak.
 
@@ -24,13 +24,13 @@ Mark each H after every call: ✅ supported · ⚠️ partial · ❌ refuted · 
 | #   | Hypothesis                                                                                                                                                       |
 | --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | H1  | SMs trust Wiz today as their primary triage queue and won't switch tools to gain marginal signal.                                                                |
-| H2  | "Integrity drift" (signed-vs-running SHA mismatch) is recognized as a Critical signal that Wiz alone cannot produce.                                             |
+| H2  | "Integrity violation" (signed-vs-running SHA mismatch) is recognized as a Critical signal that Wiz alone cannot produce.                                             |
 | H3  | "Malicious package, pre-NVD" intel from JFrog SR is meaningfully earlier than what they get today and worth integrating.                                         |
 | H4  | "Newly applicable CVE" (post-deploy applicability change) is a real pain — they currently miss these or learn about them too late.                               |
 | H5  | SAST findings inside the Wiz triage queue are wanted (vs. the current pattern of SAST living in a separate dev tool).                                            |
 | H6  | The "Validated in Runtime" enrichment (lighting up Wiz's existing-but-empty signal) is the most viscerally valuable item — narrows their backlog.                |
 | H7  | SMs would approve adding JFrog as a data source IF integration is read-only and visible signal is clearly attributed ("Augmented by JFrog" labeling is correct). |
-| H8  | The 4 use cases are valued in this order of importance: drift > malicious > newly-applicable > SAST. (Falsify if order differs.)                                 |
+| H8  | The 4 use cases are valued in this order of importance: integrity violation > malicious > newly-applicable > SAST. (Falsify if order differs.)                                 |
 | H9  | A new "JFrog" tab inside the finding detail is the right pattern (vs. inline chips, vs. an external link).                                                       |
 | H10 | At least one SM would advocate internally for turning this on if it shipped (intent to adopt).                                                                    |
 
@@ -39,7 +39,7 @@ Mark each H after every call: ✅ supported · ⚠️ partial · ❌ refuted · 
 ## Anti-Patterns (Don't Do)
 
 - **Don't pitch.** No "this is the magic" or "we think this is awesome." Let them react.
-- **Don't define jargon for them.** If they don't know what "integrity drift" means, that's a finding — write it down.
+- **Don't define jargon for them.** If they don't know what "integrity violation" means, that's a finding — write it down.
 - **Don't lead with all 4 use cases.** Show the screen, see what they notice first.
 - **Don't fix the POC mid-call.** Note any confusion as a finding.
 - **Don't show the JFrog logo in your slide deck before the call.** Surprise = unbiased reaction.
@@ -81,7 +81,7 @@ Mark each H after every call: ✅ supported · ⚠️ partial · ❌ refuted · 
 4. "Have you been bitten by a malicious package — the kind that's not yet a CVE? How did you find out?"
 5. "Is there ever a case where the image running in production isn't the one you expected? How would you know?"
 
-> 📝 **Capture:** Which of the 4 use cases (drift / malicious / newly-applicable / SAST) the participant brings up **without prompting**. That's the strongest signal.
+> 📝 **Capture:** Which of the 4 use cases (integrity violation / malicious / newly-applicable / SAST) the participant brings up **without prompting**. That's the strongest signal.
 
 ---
 
@@ -119,7 +119,7 @@ Mark each H after every call: ✅ supported · ⚠️ partial · ❌ refuted · 
 
 ### Probe specifically per use case (only if they don't surface it themselves):
 
-#### Integrity Drift
+#### Integrity Violation
 
 > "I'm going to show you a different finding type. Tell me what you understand from it."
 > Steer to `IDR-2026-0091`. Then: _"In your environment, has anything like this ever happened? How did you find out?"_
@@ -188,7 +188,7 @@ Mark each H after every call: ✅ supported · ⚠️ partial · ❌ refuted · 
 
 When you need to explain a use case in plain language without leading them:
 
-> **Integrity drift:** "JFrog can compare the image SHA running in your cluster against the SHA that was signed and promoted to production. If they don't match, something happened after release."
+> **Integrity violation:** "JFrog can compare the image SHA running in your cluster against the SHA that was signed and promoted to production. If they don't match, something happened after release."
 
 > **Malicious package, pre-NVD:** "JFrog has a security research team that flags packages as malicious in their internal feed before NVD publishes a CVE. We can surface that as a signal in Wiz."
 
@@ -244,4 +244,4 @@ Referrals offered: ____________
 - **Filter chips below header:** Look for the second row labeled "JFrog signals" with 4 colored chips
 - **Findings table:** Rows with a green frog mark are JFrog-augmented; the **Insights** column shows colored chips per use case type
 - **Detail panel (click any row):** Look for the new **JFrog tab** between Overview and Code-to-Cloud (only on augmented findings)
-- **Inside the JFrog tab:** Drift shows SHA comparison · Malicious shows JFrog SR advisory + days-before-NVD · Newly-applicable shows applicability timeline · SAST shows file:line + suggested fix
+- **Inside the JFrog tab:** Integrity violation shows SHA comparison · Malicious shows JFrog Research advisory + days-before-NVD · Newly-applicable shows applicability timeline · SAST shows file:line + suggested fix

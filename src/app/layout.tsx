@@ -13,7 +13,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Wiz × JFrog — Augmentation POC",
   description:
-    "Validation POC: How JFrog signals (Integrity Drift, Malicious Packages, Newly Applicable CVEs, SAST) augment Wiz Vulnerability Findings for Security Managers.",
+    "Validation POC: How JFrog signals (Integrity Violation, Malicious Packages, Newly Applicable CVEs, SAST) augment Wiz Vulnerability Findings for Security Managers.",
 };
 
 export default function RootLayout({

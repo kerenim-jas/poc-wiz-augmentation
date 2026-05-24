@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Lock } from "lucide-react";
+import { POC_VERSION } from "@/lib/version";
 
 /**
  * Lightweight client-side password gate for the static-hosted POC.
@@ -44,10 +45,14 @@ export function PasswordGate({ children }: { children: React.ReactNode }) {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
+    let storedAuthed = false;
     try {
-      if (sessionStorage.getItem(STORAGE_KEY) === "ok") setAuthed(true);
+      storedAuthed = sessionStorage.getItem(STORAGE_KEY) === "ok";
     } catch {}
-    setHydrated(true);
+    queueMicrotask(() => {
+      if (storedAuthed) setAuthed(true);
+      setHydrated(true);
+    });
   }, []);
 
   if (!hydrated) {
@@ -145,7 +150,7 @@ export function PasswordGate({ children }: { children: React.ReactNode }) {
           className="mt-4 text-center text-[11px]"
           style={{ color: "var(--text-tertiary)" }}
         >
-          Wiz × JFrog · Security Manager validation POC
+          Wiz × JFrog · Security Manager validation POC · {POC_VERSION}
         </p>
       </div>
     </div>

@@ -4,7 +4,7 @@
  * The set is intentionally crafted to mix:
  *  - Regular Wiz CVE findings (the baseline a Security Manager sees today)
  *  - Findings augmented by JFrog signals across all 4 use cases:
- *      - INTEGRITY_DRIFT  — running image SHA differs from the signed/promoted artifact SHA
+ *      - INTEGRITY_VIOLATION  — running image SHA differs from the signed/promoted artifact SHA
  *      - MALICIOUS_PKG    — flagged by JFrog Security Research (JFrog SR) as known-malicious
  *      - NEWLY_APPLICABLE — CVE that became applicable after the artifact was promoted
  *      - SAST             — code-level finding from JFrog Xray static analysis
@@ -13,9 +13,11 @@
  * the existing-but-empty Wiz "Validated in Runtime" runtime signal.
  */
 
+import type { ApplicabilityState } from "@/components/ApplicabilityPill";
+
 export type Severity = "critical" | "high" | "medium" | "low";
 
-export type AugType = "INTEGRITY_DRIFT" | "MALICIOUS_PKG" | "NEWLY_APPLICABLE" | "SAST";
+export type AugType = "INTEGRITY_VIOLATION" | "MALICIOUS_PKG" | "NEWLY_APPLICABLE" | "SAST";
 
 export interface JFrogAugmentation {
   type: AugType;
@@ -80,10 +82,12 @@ export interface Finding {
   dependencyType?: "Direct" | "Transitive" | "Unknown";
   firstSeen?: string;
   lastSeen?: string;
+  /** JAS Contextual Analysis applicability (when known) */
+  applicability?: ApplicabilityState;
 }
 
 export const FINDINGS: Finding[] = [
-  // ----- 1. INTEGRITY DRIFT (JFrog-only signal — no native Wiz equivalent) -----
+  // ----- 1. INTEGRITY VIOLATION (JFrog-only signal — no native Wiz equivalent) -----
   {
     id: "IDR-2026-0091",
     finding: "IDR-2026-0091",
@@ -100,8 +104,8 @@ export const FINDINGS: Finding[] = [
     detectionMethod: "Workload Scan",
     subscription: "jfrog-prod\n723466123100",
     jfrog: {
-      type: "INTEGRITY_DRIFT",
-      label: "Integrity drift",
+      type: "INTEGRITY_VIOLATION",
+      label: "Integrity violation",
       summary:
         "Running image SHA does not match the AppTrust-signed artifact promoted to production",
       details: {
@@ -139,8 +143,8 @@ export const FINDINGS: Finding[] = [
     detectionMethod: "Workload Scan",
     subscription: "jfrog-prod\n723466123100",
     jfrog: {
-      type: "INTEGRITY_DRIFT",
-      label: "Integrity drift",
+      type: "INTEGRITY_VIOLATION",
+      label: "Integrity violation",
       summary: "Running image SHA does not match the signed AppTrust artifact",
       details: {
         signedSha: "sha256:1ab6f3…7c20",
@@ -283,6 +287,7 @@ export const FINDINGS: Finding[] = [
     dependencyType: "Direct",
     firstSeen: "Mar 14, 2026, 9:00 AM",
     lastSeen: "May 10, 2026, 4:21 PM",
+    applicability: "Applicable",
   },
   {
     id: "CVE-2026-5704",
@@ -319,6 +324,7 @@ export const FINDINGS: Finding[] = [
     dependencyType: "Direct",
     firstSeen: "Apr 1, 2026, 8:00 AM",
     lastSeen: "May 10, 2026, 4:21 PM",
+    applicability: "Applicable",
   },
 
   // ----- 4. SAST findings (JFrog Xray code-level analysis) -----
@@ -644,7 +650,7 @@ export const FINDINGS: Finding[] = [
 
 export type CategoryFilter =
   | "all"
-  | "INTEGRITY_DRIFT"
+  | "INTEGRITY_VIOLATION"
   | "MALICIOUS_PKG"
   | "NEWLY_APPLICABLE"
   | "SAST"
@@ -658,7 +664,7 @@ export function filterFindings(findings: Finding[], filter: CategoryFilter): Fin
 
 export function countByAug(findings: Finding[]): Record<AugType, number> {
   const out: Record<AugType, number> = {
-    INTEGRITY_DRIFT: 0,
+    INTEGRITY_VIOLATION: 0,
     MALICIOUS_PKG: 0,
     NEWLY_APPLICABLE: 0,
     SAST: 0,

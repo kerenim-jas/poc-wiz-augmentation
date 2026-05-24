@@ -9,6 +9,7 @@ import {
   HelpCircle,
   Megaphone,
 } from "lucide-react";
+import { POC_VERSION } from "@/lib/version";
 
 export function WizTopBar() {
   return (
@@ -28,6 +29,15 @@ export function WizTopBar() {
       </div>
 
       <div className="flex items-center gap-2">
+        <span
+          className="rounded px-2 py-0.5 text-[10px] font-semibold"
+          style={{
+            background: "var(--bg-muted)",
+            color: "var(--text-secondary)",
+          }}
+        >
+          {POC_VERSION}
+        </span>
         <div
           className="flex h-7 items-center gap-1.5 rounded px-2 text-[11px]"
           style={{ color: "var(--text-tertiary)" }}

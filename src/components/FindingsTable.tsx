@@ -5,6 +5,8 @@ import { Box, FileCode, MoreVertical, ShieldAlert, Settings } from "lucide-react
 import type { Finding } from "@/lib/findings";
 import { SeverityBadge, StatusPill } from "./SeverityBadge";
 import { JFrogChip, JFrogLogo } from "./JFrogChip";
+import { JFrogResearchBadge } from "./JFrogResearchBadge";
+import { ApplicabilityPill } from "./ApplicabilityPill";
 
 const COLUMNS = [
   { id: "finding", label: "Finding", w: "180px", align: "left" as const },
@@ -74,16 +76,22 @@ function InsightCell({ finding }: { finding: Finding }) {
       {finding.jfrog && (
         <JFrogChip type={finding.jfrog.type} size="xs" variant="soft" />
       )}
+      {finding.jfrog?.type === "MALICIOUS_PKG" && (
+        <JFrogResearchBadge />
+      )}
+      {finding.applicability && (
+        <ApplicabilityPill state={finding.applicability} />
+      )}
     </div>
   );
 }
 
 function FindingIcon({ finding }: { finding: Finding }) {
-  if (finding.jfrog?.type === "INTEGRITY_DRIFT") {
+  if (finding.jfrog?.type === "INTEGRITY_VIOLATION") {
     return (
       <span
         className="flex h-4 w-4 items-center justify-center rounded"
-        style={{ background: "var(--aug-drift-bg)", color: "var(--aug-drift)" }}
+        style={{ background: "var(--aug-violation-bg)", color: "var(--aug-violation)" }}
       >
         <ShieldAlert className="h-3 w-3" />
       </span>

@@ -41,11 +41,11 @@ const JFROG_FILTERS: Array<{
   bg: string;
 }> = [
   {
-    key: "INTEGRITY_DRIFT",
-    label: "Integrity drift",
+    key: "INTEGRITY_VIOLATION",
+    label: "Integrity violation",
     icon: <GitCompare className="h-3 w-3" />,
-    fg: "var(--aug-drift)",
-    bg: "var(--aug-drift-bg)",
+    fg: "var(--aug-violation)",
+    bg: "var(--aug-violation-bg)",
   },
   {
     key: "MALICIOUS_PKG",

@@ -2,6 +2,7 @@
 
 import { Plus, MoreHorizontal } from "lucide-react";
 import { JFrogChip, JFrogLogo } from "./JFrogChip";
+import { JFrogResearchBadge } from "./JFrogResearchBadge";
 import { countByAug, FINDINGS } from "@/lib/findings";
 
 function Card({
@@ -285,10 +286,10 @@ export function FindingsOverview() {
         <div className="grid grid-cols-4 divide-x" style={{ borderColor: "var(--border)" }}>
           {(
             [
-              { type: "INTEGRITY_DRIFT", title: "Integrity Drift", count: augCounts.INTEGRITY_DRIFT, sub: "Signed SHA ≠ Running SHA" },
-              { type: "MALICIOUS_PKG", title: "Malicious Packages", count: augCounts.MALICIOUS_PKG, sub: "JFrog SR — pre-NVD detection" },
-              { type: "NEWLY_APPLICABLE", title: "Newly Applicable CVEs", count: augCounts.NEWLY_APPLICABLE, sub: "Became exploitable post-deploy" },
-              { type: "SAST", title: "SAST Findings", count: augCounts.SAST, sub: "Code-level analysis from Xray" },
+              { type: "INTEGRITY_VIOLATION", title: "Integrity Violation", count: augCounts.INTEGRITY_VIOLATION, sub: "Signed SHA ≠ Running SHA", badge: false },
+              { type: "MALICIOUS_PKG", title: "Malicious Packages", count: augCounts.MALICIOUS_PKG, sub: null, badge: true },
+              { type: "NEWLY_APPLICABLE", title: "Newly Applicable CVEs", count: augCounts.NEWLY_APPLICABLE, sub: "Became exploitable post-deploy", badge: false },
+              { type: "SAST", title: "SAST Findings", count: augCounts.SAST, sub: "Code-level analysis from Xray", badge: false },
             ] as const
           ).map((c) => (
             <div key={c.type} className="px-3 py-2.5" style={{ borderColor: "var(--border)" }}>
@@ -313,7 +314,14 @@ export function FindingsOverview() {
                 {c.title}
               </div>
               <div className="text-[10px]" style={{ color: "var(--text-tertiary)" }}>
-                {c.sub}
+                {"badge" in c && c.badge ? (
+                  <span className="inline-flex items-center gap-1">
+                    <JFrogResearchBadge />
+                    <span>· pre-NVD detection</span>
+                  </span>
+                ) : (
+                  c.sub
+                )}
               </div>
             </div>
           ))}

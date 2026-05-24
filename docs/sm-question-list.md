@@ -41,7 +41,7 @@
 
 | Use case | Steer to | Probe |
 |---|---|---|
-| Integrity Drift | `IDR-2026-0091` | "Has anything like this happened in your env? How would you find out?" |
+| Integrity Violation | `IDR-2026-0091` | "Has anything like this happened in your env? How would you find out?" |
 | Malicious Package | `JFSR-2026-0419` | "How do you usually find out about malicious packages today?" |
 | Newly Applicable CVE | `CVE-2026-33056` | "What does 'newly applicable' mean to you here?" |
 | SAST | `XRAY-SAST-1042` | "Where would you normally see something like this today?" |
@@ -71,9 +71,9 @@
 
 ## Cheat sheet — plain-language definitions
 
-**Integrity drift** — Compare image SHA running in cluster vs. SHA signed and promoted. Mismatch = something happened after release.
+**Integrity violation** — Compare image SHA running in cluster vs. SHA signed and promoted. Mismatch = something happened after release.
 
-**Malicious package, pre-NVD** — JFrog SR flags packages as malicious in their internal feed before NVD publishes a CVE.
+**Malicious package, pre-NVD** — JFrog Research flags packages as malicious in their internal feed before NVD publishes a CVE.
 
 **Newly applicable CVE** — A CVE that wasn't applicable when scanned becomes applicable later (new exploit, new context). JFrog re-evaluates continuously.
 

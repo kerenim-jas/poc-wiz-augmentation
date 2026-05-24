@@ -5,8 +5,8 @@ Validation mock for **Scope 1: Augment Wiz with JFrog Data**, the JFrog → Wiz 
 > Persona: **Security Manager / Vuln-Mgmt Lead**
 > Use cases:
 >
-> - Integrity Drift (signed SHA ≠ running SHA)
-> - Malicious Packages (pre-NVD detection by JFrog SR)
+> - Integrity Violation (signed SHA ≠ running SHA)
+> - Malicious Packages (pre-NVD detection by JFrog Research)
 > - Newly Applicable CVEs (post-deploy re-applicability)
 > - SAST (source-level findings via JFrog Xray)
 
